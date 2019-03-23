@@ -1,0 +1,24 @@
+{
+  "name": "teacher-admin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wsee911/teacher-email.git"
+  },
+  "author": "wsee911",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wsee911/teacher-email/issues"
+  },
+  "homepage": "https://github.com/wsee911/teacher-email#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mysql": "^2.16.0"
+  },
+  "devDependencies": {}
+}

@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-const {registerStudents, commonStudents} = require('./mainFn');
+const {registerStudents, commonStudents, retrieveNotifications} = require('./mainFn');
 const {createTeacher} = require('./teacherFn');
 const {createStudent, suspendStudent} = require('./studentFn');
 
@@ -15,9 +15,9 @@ app.post(`/api/register`, registerStudents);
 
 app.get(`/api/commonstudents`, commonStudents);
 
-app.get(`/api/suspend`, suspendStudent);
+app.post(`/api/suspend`, suspendStudent);
+
+app.post(`/api/retrievefornotifications`, retrieveNotifications);
 
 app.listen(3000);
-
-// http.createServer(api).listen(3000, "127.0.0.1");
 console.log('Server running at http://127.0.0.1:3000');

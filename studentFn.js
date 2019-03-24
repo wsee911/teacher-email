@@ -1,6 +1,10 @@
 const pool = require('./sqlPool');
-const {validEmail, existUser} = require('./miscFn');
+const {validEmail, existUser, formatDBOutput} = require('./miscFn');
 
+/**
+ * validates student email
+ * @param {string} stuEmail 
+ */
 const validateStudentParam = (stuEmail) => {
   if(!stuEmail) {
     throw new Error(`Missing student emails`);
@@ -10,6 +14,11 @@ const validateStudentParam = (stuEmail) => {
   }
 }
 
+/**
+ * Inserts a new student
+ * @param {object} req 
+ * @param {object} res 
+ */
 const createStudent = async (req, res) => {
   try {
     const {student} = req.body;
@@ -28,6 +37,11 @@ const createStudent = async (req, res) => {
   }
 }
 
+/**
+ * Suspends a specified student
+ * @param {object} req 
+ * @param {object} res 
+ */
 const suspendStudent = async (req, res) => {
   try {
     const {student} = req.body;
@@ -50,4 +64,16 @@ const suspendStudent = async (req, res) => {
   }
 }
 
-module.exports = {validateStudentParam, createStudent, suspendStudent};
+/**
+ * If student is suspended
+ * @param {int} studentid 
+ */
+const isSuspend = async (studentid) => {
+  const sql = `SELECT email, suspend FROM student WHERE studentid = ?`;
+  const dbRes = await pool.query(sql, studentid);
+  if(dbRes.length > 0) {
+    return formatDBOutput(dbRes)[0];
+  }
+}
+
+module.exports = {validateStudentParam, createStudent, suspendStudent, isSuspend};

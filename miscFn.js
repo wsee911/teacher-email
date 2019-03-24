@@ -16,6 +16,11 @@ const validEmail = (email) => (
     ? true : false
 )
 
+/**
+ * Check if user exists
+ * @param {string} email 
+ * @param {string} table 
+ */
 const existUser = async (email, table = ``) => {
   if(table === ``) {
     throw new Error(`Missing table name`);
@@ -28,4 +33,26 @@ const existUser = async (email, table = ``) => {
   return false;
 }
 
-module.exports = {formatDBOutput, validEmail, existUser};
+/**
+ * Formats and extracts message and emails
+ * @param {string} notification 
+ */
+const formatNotification = (notification) => {
+  const getEmailRegex = /@[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/gi;
+  const frontSymbol = /^@/gi;
+  let emails = notification.match(getEmailRegex);
+  let message = notification;
+  let formatEmails = [];
+  if(emails !== null) {
+    formatEmails = emails.map(email => {
+      message = message.replace(email, '').trim();
+      return email.replace(frontSymbol, '');
+    })
+  }
+  return {
+    message,
+    students: formatEmails
+  }
+}
+
+module.exports = {formatDBOutput, validEmail, existUser, formatNotification};

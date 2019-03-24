@@ -1,6 +1,10 @@
 const pool = require('./sqlPool');
 const {validEmail, existUser} = require('./miscFn');
 
+/**
+ * validates teacher email
+ * @param {string} teachEmail 
+ */
 const validateTeacherParam = async (teachEmail) => {
   if(!teachEmail) {
     throw new Error(`Missing teacher's email`);
@@ -10,6 +14,11 @@ const validateTeacherParam = async (teachEmail) => {
   }  
 }
 
+/**
+ * Inserts a new teacher 
+ * @param {object} req 
+ * @param {object} res 
+ */
 const createTeacher = async (req, res) => {
   try {
     const {teacher} = req.body;

@@ -1,3 +1,4 @@
+const pool = require('./sqlPool');
 /**
  * To reformat default mysql output
  * @param {array} arr 
@@ -15,4 +16,16 @@ const validEmail = (email) => (
     ? true : false
 )
 
-module.exports = {formatDBOutput, validEmail};
+const existUser = async (email, table = ``) => {
+  if(table === ``) {
+    throw new Error(`Missing table name`);
+  }
+  const sql = `SELECT * FROM ${table} WHERE email = ?`;
+  const dbRes = await pool.query(sql, email);
+  if(dbRes.length > 0) {
+    return formatDBOutput(dbRes)[0];
+  }
+  return false;
+}
+
+module.exports = {formatDBOutput, validEmail, existUser};

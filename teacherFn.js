@@ -1,32 +1,30 @@
 const pool = require('./sqlPool');
-const {validEmail, formatDBOutput} = require('./miscFn');
+const {validEmail, existUser} = require('./miscFn');
 
 const validateTeacherParam = async (teachEmail) => {
   if(!teachEmail) {
-    throw new Error(`Error: Missing teacher's email`);
+    throw new Error(`Missing teacher's email`);
   }  
   if(validEmail(teachEmail)) {
-    throw new Error(`Error: ${teachEmail} incorrect email format`);
+    throw new Error(`${teachEmail} incorrect email format`);
   }  
 }
 
-const existTeacher = async (teachEmail) => {
-  const sql = `SELECT teacherid FROM teacher WHERE email = ?`;
-  const dbRes = await pool.query(sql, teachEmail);
-  if(dbRes.length > 0) {
-    return dbRes[0].teacherid;
+const createTeacher = async (req, res) => {
+  try {
+    const {teacher} = req.body;
+    await validateTeacherParam(teacher);
+    const teacherUsr = await existUser(teacher, `teacher`)
+    if(teacherUsr !== false) {
+      throw new Error(`Teacher's email already exists`);
+    } 
+    const sql = `INSERT INTO teacher (email) VALUES ('${teacher}')`;
+    const dbRes = await pool.query(sql);
+    res.status(200).send(`Teacher ${teacher} created.`)
+  } catch(err) {
+    console.log(err)
+    res.status(500).send({message: err.message});
   }
-  return false;
 }
 
-const insertTeacher = async (teachEmail) => {
-  const teacherid = await existTeacher(teachEmail)
-  if(teacherid) {
-    return teacherid;
-  } 
-  const sql = `INSERT INTO teacher (email) VALUES ('${teachEmail}')`;
-  const dbRes = await pool.query(sql);
-  return dbRes.insertId;
-}
-
-module.exports = {validateTeacherParam, insertTeacher};
+module.exports = {validateTeacherParam, createTeacher};

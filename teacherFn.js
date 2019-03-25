@@ -12,6 +12,7 @@ const validateTeacherParam = async (teachEmail) => {
   if(validEmail(teachEmail)) {
     throw new Error(`${teachEmail} incorrect email format`);
   }  
+  return null;
 }
 
 /**

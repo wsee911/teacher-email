@@ -9,7 +9,7 @@ const validateStudentParam = (stuEmail) => {
   if(!stuEmail) {
     throw new Error(`Missing student emails`);
   }
-  if(validEmail(stuEmail)) {
+  if(!validEmail(stuEmail)) {
     throw new Error(`${stuEmail} incorrect email format`);
   }
 }

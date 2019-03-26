@@ -9,10 +9,9 @@ const validateTeacherParam = async (teachEmail) => {
   if(!teachEmail) {
     throw new Error(`Missing teacher's email`);
   }  
-  if(validEmail(teachEmail)) {
+  if(!validEmail(teachEmail)) {
     throw new Error(`${teachEmail} incorrect email format`);
-  }  
-  return null;
+  }
 }
 
 /**

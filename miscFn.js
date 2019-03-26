@@ -12,7 +12,7 @@ const formatDBOutput = (arr) => {
  * @param {string} email 
  */
 const validEmail = (email) => (
-  email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email.trim())
+  email && /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email.trim())
     ? true : false
 )
 

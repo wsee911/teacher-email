@@ -25,11 +25,12 @@ const commonStudents = async (req, res) => {
     if(typeof teacher === `string`) {
       await validateTeacherParam(teacher);
     } else {
-      teacher.forEach(async email => {
-        await validateTeacherParam(email);
+      let res = teacher.map(async email => {
+        return await validateTeacherParam(email);
       });
+      await Promise.all(res);
     }
-    let students = relatedStudents(teacher);
+    let students = await relatedStudents(teacher);
     res.status(200).send({students})
   } catch(err) {
     console.log(err);
@@ -49,18 +50,6 @@ const isAssigned = async (teacherid, studentid) => {
     return true;
   }
   return false;
-}
-
-/**
- * If student exists
- * @param {string} student 
- */
-const studentExist = async (student) => {
-  const studentUser = await existUser(student, `student`);
-  if(studentUser === false) {
-    throw new Error(`Student ${student} not found`);
-  }
-  return studentUser.studentid;
 }
 
 /**
@@ -89,7 +78,13 @@ const registerStudents = async (req, res) => {
     const teacherId = teacherUser.teacherid;
     
     // checks if student exists
-    let studentIds = await students.map(studentExist)    
+    let studentIds = await students.map(async (student) => {
+      const studentUser = await existUser(student, `student`);
+      if(studentUser === false) {
+        throw new Error(`Student ${student} not found`);
+      }
+      return studentUser.studentid;
+    })    
     studentIds = await Promise.all(studentIds);
     await studentIds.map(async student => {
       if(!await isAssigned(teacherId, student)) {

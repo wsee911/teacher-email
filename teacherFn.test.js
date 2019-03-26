@@ -1,7 +1,7 @@
-const {validateTeacherParam, createTeacher} = require('./teacherFn');
+const {validateTeacherParam} = require('./teacherFn');
 
 test(`Makes Sure Teacher Email Correct`, async () => {
-  expect(await validateTeacherParam(`test@test.com`)).toBeNull();
+  expect(await validateTeacherParam(`test@test.com`)).toBeUndefined();
 })
 
 test(`Makes Sure Teacher Email Added`, async () => {
@@ -18,13 +18,5 @@ test(`Makes Sure Teacher Email Format Correct`, async () => {
     await validateTeacherParam(email)
   } catch(err) {
     expect(err.message).toMatch(`${email} incorrect email format`);
-  }
-})
-
-test(`Makes Sure Teacher Email Exist`, async () => {   
-  try {  
-    await createTeacher(req)
-  } catch(err) {
-    expect(err.message).toMatch(`Teacher's email already exists`);
   }
 })

@@ -1,0 +1,376 @@
+{
+	"info": {
+		"_postman_id": "c900acc3-db68-4e55-bb53-be4798290ca8",
+		"name": "Teacher System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register Student",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"teacher\": \"wa@gmail.com\",\n\t\"students\": [\n\t\t\"bruce@gmail.com\"\n\t]\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/register",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Teacher",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"teacher\": \"wa@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/create-teacher",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"create-teacher"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Student",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"students\": [\n\t\t\"alice@gmail.com\", \"tim@gmail.com\"\n\t]\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/create-student",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"create-student"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Suspend Students",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"student\":\"tim@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/suspend",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"suspend"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Common Students",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b196e996-9af7-4200-b8b9-2dade25d74e3",
+						"exec": [
+							"pm.test(\"Return students\", function () {",
+							"    var jsonData = pm.response.to.have.jsonBody();",
+							"});",
+							"",
+							"pm.test(\"Error 500 return Error Message\", function () {",
+							"    pm.expect(pm.response.json().message).to.include(\"test@.com incorrect email format\");",
+							"});",
+							"",
+							"var schema = {",
+							"  \"students\": [",
+							"    \"string\"",
+							"  ]",
+							"};",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/commonstudents?teacher=test@.com&teacher=wrong@gmail.com",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"commonstudents"
+					],
+					"query": [
+						{
+							"key": "teacher",
+							"value": "test@.com"
+						},
+						{
+							"key": "teacher",
+							"value": "wrong@gmail.com"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Common Students (Wrong Email)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/api/commonstudents?teacher=test@.com&teacher=wrong@gmail.com",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"commonstudents"
+							],
+							"query": [
+								{
+									"key": "teacher",
+									"value": "test@.com"
+								},
+								{
+									"key": "teacher",
+									"value": "wrong@gmail.com"
+								}
+							]
+						}
+					},
+					"status": "Internal Server Error",
+					"code": 500,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "46"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"2e-5ysHaL0fyXNNqn4raVoCcHnyvMo\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 26 Mar 2019 15:29:52 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"test@.com incorrect email format\"\n}"
+				},
+				{
+					"name": "Common Students (2 Teachers)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:3000/api/commonstudents?teacher=test@tst.com&teacher=wa@gmail.com",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"commonstudents"
+							],
+							"query": [
+								{
+									"key": "teacher",
+									"value": "test@tst.com"
+								},
+								{
+									"key": "teacher",
+									"value": "wa@gmail.com"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "48"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"30-jKoh05ScWucIDtN1WYkmPIASUfc\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 26 Mar 2019 15:26:48 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"students\": [\n        \"wayne@gmail.com\",\n        \"tim@gmail.com\"\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Retrieve for Notifications",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"teacher\": \"test@tst.com\",\n\t\"notification\": \"Hello students! @tim@gmail.com @wayne@gmail.com @steven@gmail.com\"\n}"
+				},
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/retrievefornotifications",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"retrievefornotifications"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

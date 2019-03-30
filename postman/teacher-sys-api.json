@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"teacher\": \"wa@gmail.com\",\n\t\"students\": [\n\t\t\"bruce@gmail.com\"\n\t]\n}"
+					"raw": "{\n\t\"teacher\": \"winnie@gmail.com\",\n\t\"students\": [\n\t\t\"alice@gmail.com\"\n\t]\n}"
 				},
 				"url": {
 					"raw": "http://127.0.0.1:3000/api/register",
@@ -53,7 +53,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"teacher\": \"wa@gmail.com\"\n}"
+					"raw": "{\n\t\"teacher\": \"winnie@gmail.com\"\n}"
 				},
 				"url": {
 					"raw": "http://127.0.0.1:3000/api/create-teacher",
@@ -87,7 +87,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"students\": [\n\t\t\"alice@gmail.com\", \"tim@gmail.com\"\n\t]\n}"
+					"raw": "{\n\t\"student\": \"tyler@gmail.com\"\n}"
 				},
 				"url": {
 					"raw": "http://127.0.0.1:3000/api/create-student",
@@ -121,7 +121,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"student\":\"tim@gmail.com\"\n}"
+					"raw": "{\n\t\"student\":\"bruce@gmail.com\"\n}"
 				},
 				"url": {
 					"raw": "http://127.0.0.1:3000/api/suspend",
@@ -176,7 +176,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://127.0.0.1:3000/api/commonstudents?teacher=test@.com&teacher=wrong@gmail.com",
+					"raw": "http://127.0.0.1:3000/api/commonstudents?teacher=winnie@gmail.com&teacher=kim@gmail.com",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -192,11 +192,11 @@
 					"query": [
 						{
 							"key": "teacher",
-							"value": "test@.com"
+							"value": "winnie@gmail.com"
 						},
 						{
 							"key": "teacher",
-							"value": "wrong@gmail.com"
+							"value": "kim@gmail.com"
 						}
 					]
 				}
@@ -352,7 +352,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"teacher\": \"test@tst.com\",\n\t\"notification\": \"Hello students! @tim@gmail.com @wayne@gmail.com @steven@gmail.com\"\n}"
+					"raw": "{\n\t\"teacher\": \"kim@gmail.com\",\n\t\"notification\": \"Hello students! @alice@gmail.com\"\n}"
 				},
 				"url": {
 					"raw": "http://127.0.0.1:3000/api/retrievefornotifications",

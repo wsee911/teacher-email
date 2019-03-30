@@ -30,7 +30,14 @@ const commonStudents = async (req, res) => {
       });
       await Promise.all(res);
     }
-    let students = await relatedStudents(teacher);
+    
+    let sql = `SELECT s.email FROM assigned_ts assign JOIN student s ON s.studentid = assign.studentid JOIN teacher t ON t.teacherid = assign.teacherid WHERE t.email IN (?) GROUP BY assign.studentid HAVING COUNT(assign.studentid) > 1`;
+    if(typeof teacher === `string`) {
+      sql = `SELECT s.email FROM assigned_ts assign JOIN student s ON s.studentid = assign.studentid JOIN teacher t ON t.teacherid = assign.teacherid WHERE t.email IN (?)`;
+    }
+    const dbRes = await pool.query(sql, [teacher]);
+    let students = formatDBOutput(dbRes);
+    students = students.map(student => (student.email))
     res.status(200).send({students})
   } catch(err) {
     console.log(err);
@@ -125,18 +132,27 @@ const retrieveNotifications = async (req, res) => {
     const {message, students} = await formatNotification(notification);
     if(students.length > 0) {
       // checks if student exists
-      let studentIds = await students.map(studentExist)    
-      studentIds = await Promise.all(studentIds);
+      let checkedStudents = await students.map(student => (existUser(student, `student`))); 
+      checkedStudents = await Promise.all(checkedStudents);
+      await checkedStudents.map(student => {
+        if(student === false) {
+          throw new Error(`There are students not found`)
+        }
+      })
+      recipients = await relatedStudents(teacher);
+      
       // checks if student suspended
-      let notSuspendStudents = studentIds.map(async studentid => {
+      let notSuspendStudents = checkedStudents.map(async studentid => {
         let student = await isSuspend(studentid)
-        if(!student.suspend) {
+        if(student) {
           return student.email;
         }
         return null;
       }) 
-      recipients = await Promise.all(notSuspendStudents);
+      notSuspendStudents = await Promise.all(notSuspendStudents);
+      recipients = recipients.concat(notSuspendStudents);
       recipients = await recipients.filter(email => (email!==null))
+      recipients = Array.from(new Set(recipients));
     } else {
       // runs if no recipients specified
       recipients = await relatedStudents(teacher);

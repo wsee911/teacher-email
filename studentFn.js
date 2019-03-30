@@ -68,12 +68,11 @@ const suspendStudent = async (req, res) => {
  * If student is suspended
  * @param {int} studentid 
  */
-const isSuspend = async (studentid) => {
-  const sql = `SELECT email, suspend FROM student WHERE studentid = ?`;
-  const dbRes = await pool.query(sql, studentid);
-  if(dbRes.length > 0) {
-    return formatDBOutput(dbRes)[0];
+const isSuspend = async (student) => {
+  if(!student.suspend) {
+    return student;
   }
+  return false;
 }
 
 module.exports = {validateStudentParam, createStudent, suspendStudent, isSuspend};

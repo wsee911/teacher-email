@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 27, 2019 at 03:31 PM
+-- Generation Time: Mar 30, 2019 at 07:10 PM
 -- Server version: 10.1.38-MariaDB
 -- PHP Version: 7.3.3
 
@@ -39,12 +39,11 @@ CREATE TABLE `assigned_ts` (
 --
 
 INSERT INTO `assigned_ts` (`assignid`, `teacherid`, `studentid`) VALUES
-(29, 10, 77),
-(30, 10, 78),
-(31, 9, 78),
-(32, 9, 80),
-(33, 9, 79),
-(34, 10, 79);
+(1, 1, 2),
+(2, 1, 4),
+(3, 2, 3),
+(4, 2, 2),
+(5, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -63,10 +62,10 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`studentid`, `email`, `suspend`) VALUES
-(77, 'steven@gmail.com', 0),
-(78, 'wayne@gmail.com', 0),
-(79, 'alice@gmail.com', 1),
-(80, 'tim@gmail.com', 0);
+(1, 'alice@gmail.com', 0),
+(2, 'bruce@gmail.com', 1),
+(3, 'ben@gmail.com', 0),
+(4, 'tyler@gmail.com', 0);
 
 -- --------------------------------------------------------
 
@@ -84,8 +83,8 @@ CREATE TABLE `teacher` (
 --
 
 INSERT INTO `teacher` (`teacherid`, `email`) VALUES
-(9, 'test@tst.com'),
-(10, 'wa@gmail.com');
+(1, 'kim@gmail.com'),
+(2, 'winnie@gmail.com');
 
 --
 -- Indexes for dumped tables
@@ -119,19 +118,19 @@ ALTER TABLE `teacher`
 -- AUTO_INCREMENT for table `assigned_ts`
 --
 ALTER TABLE `assigned_ts`
-  MODIFY `assignid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `assignid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
-  MODIFY `studentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `studentid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `teacher`
 --
 ALTER TABLE `teacher`
-  MODIFY `teacherid` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `teacherid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

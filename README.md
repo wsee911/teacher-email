@@ -1,6 +1,7 @@
 # teacher-email
 
 ## LocalHost Server Setup
+* Windows 10
 * XAMPP Local Server
 * NodeJs V8.15
 
